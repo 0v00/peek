@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+myvenv/
+app/movie_files/
+movies.db
+.vscode
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+Thumbs.db
