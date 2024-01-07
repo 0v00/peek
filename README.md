@@ -1,7 +1,7 @@
 # peek
 ( ͡° ͜ʖ ͡°)	
 
-Playing around with FastAPI, FFmpeg, and SQLite. Not really meant for anyone else to use.
+Playing around with FastAPI, FFmpeg, and SQLite. Not really meant for anyone else to use. A toy project to improve my Python.
 
 ### Get List of Movies
 
