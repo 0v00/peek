@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Response
-from ..database import get_movie_by_id, get_db_connection
+from ..database import get_all_movies, get_movie_by_id, get_db_connection
 from ..utils.ffmpeg_utils import generate_gif, take_screenshot, get_movie_duration
 import subprocess
 import random
@@ -11,14 +11,8 @@ movie_files_directory = "app/movie_files/"
 
 @router.get("/movies")
 async def get_movies():
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute('SELECT id, title, year, director FROM movies')
-    # fetchall() returns a list of tuples
-    movies_tuples_list = c.fetchall()
-    conn.close()
-    # transform it into a list of dict items
-    return [{"id": id, "title": title, "year": year, "director": director} for id, title, year, director in movies_tuples_list]
+    all_movies = get_all_movies()
+    return all_movies
 
 @router.get("/movies/{movie_id}/screenshot")
 async def get_movie_screenshot(movie_id: int):
