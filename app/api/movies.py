@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Response
-from ..database import get_all_movies, get_movie_by_id, get_db_connection
+from ..database import get_all_movies, get_movie_by_id
 from ..utils.ffmpeg_utils import generate_gif, take_screenshot, get_movie_duration
 import subprocess
 import random
