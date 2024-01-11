@@ -5,3 +5,8 @@ pytest
 Pillow
 transformers
 torch
+torchvision
+numpy
+matplotlib
+opencv-python-headless
+git+https://github.com/0v00/segment-anything.git@as-type-float-32

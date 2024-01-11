@@ -3,6 +3,7 @@ __pycache__/
 myvenv/
 app/movie_files/
 movies.db
+sam_vit_h_4b8939.pth
 .vscode
 .DS_Store
 .DS_Store?
