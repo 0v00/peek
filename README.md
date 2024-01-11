@@ -1,7 +1,7 @@
 # peek
 ( ͡° ͜ʖ ͡°)	
 
-Playing around with [detr-resnet-101](https://huggingface.co/facebook/detr-resnet-101) and [segment-anything](https://github.com/facebookresearch/segment-anything), FastAPI, FFmpeg, and SQLite. Not really meant for anyone else to use (you obviously can't run this, unless you also have the same movie files inside of `peek/app/movie_files/`).
+Playing around with [detr-resnet-101](https://huggingface.co/facebook/detr-resnet-101), [segment-anything](https://github.com/facebookresearch/segment-anything), FastAPI, FFmpeg, and SQLite. Not really meant for anyone else to use (you obviously can't run this, unless you also have the same movie files inside of `peek/app/movie_files/`).
 
 1. `uvicorn app.main:app --reload`
 2. `curl http://localhost:8000/movies/1/screenshot | tee >(jq -r '.screenshot' | base64 --decode > peek_output1.jpg) >(jq '.detr_output') > /dev/null`
