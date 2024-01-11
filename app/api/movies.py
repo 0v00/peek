@@ -1,9 +1,12 @@
 from fastapi import APIRouter, HTTPException, Response
 from ..database import get_all_movies, get_movie_by_id
+from ..utils.detr_resnet_101 import detectObjects
 from ..utils.ffmpeg_utils import generate_gif, take_screenshot, get_movie_duration
-import subprocess
+from PIL import Image
+from io import BytesIO
 import random
 import os
+import base64
 
 router = APIRouter()
 
@@ -16,22 +19,30 @@ async def get_movies():
 
 @router.get("/movies/{movie_id}/screenshot")
 async def get_movie_screenshot(movie_id: int):
-    movie = get_movie_by_id(movie_id)
+    MAX_ATTEMPTS = 5
+    for _ in range(MAX_ATTEMPTS):
+        screenshot_data, detr_output = take_screenshot_with_detr(movie_id)
+        if any(obj['label'] in ['person'] for obj in detr_output):
+            encoded_image = base64.b64encode(screenshot_data).decode('utf-8')
+            return {"screenshot": encoded_image, "detr_output": detr_output}
+    raise HTTPException(status_code=404, detail="no living things found in movie, weird.")
 
+def take_screenshot_with_detr(movie_id: int):
+    movie = get_movie_by_id(movie_id)
     if not movie:
         raise HTTPException(status_code=404, detail="movie not found")
     
     file_path = os.path.join(movie_files_directory, movie[-1])
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="movie file path not found")
+    
+    duration = get_movie_duration(file_path)
+    screenshot_time = random.uniform(0, duration - 1)
+    image_data = take_screenshot(file_path, screenshot_time)
+    image = Image.open(BytesIO(image_data))
+    detr_output = detectObjects(image)
+    return image_data, detr_output
 
-    try:
-        duration = get_movie_duration(file_path)
-        screenshot_time = random.uniform(0, duration - 1)
-        image_data = take_screenshot(file_path, screenshot_time)
-        return Response(content=image_data, media_type="image/jpeg")
-    except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail="error taking screenshot")
     
 @router.get("/movies/{movie_id}/gif")
 async def get_movie_gif(movie_id: int):
@@ -48,7 +59,7 @@ async def get_movie_gif(movie_id: int):
         if duration <= 10:
             raise HTTPException(status_code=400, detail="movie too short")
         start_time = random.uniform(0, duration - 10)
-        gif_data = generate_gif(file_path, start_time)
-        return Response(content=gif_data, media_type="image/gif")
+        base64_encoded_gif = generate_gif(file_path, start_time)
+        return {"data": base64_encoded_gif}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"error generating gif: {e}")

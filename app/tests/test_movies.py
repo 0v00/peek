@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 from app.main import app
 from PIL import Image
 from io import BytesIO
+import base64
 
 client = TestClient(app)
 
@@ -20,24 +21,30 @@ def test_get_movie_screenshot():
     movie_id = 1
     response = client.get(f"/movies/{movie_id}/screenshot")
     assert response.status_code == 200
-    assert response.headers["content-type"] == "image/jpeg"
+    assert "screenshot" in response.json()
+    assert "detr_output" in response.json()
 
 def test_format_get_movie_screenshot():
     movie_id = 1
     response = client.get(f"/movies/{movie_id}/screenshot")
-    image = Image.open(BytesIO(response.content))
+    screenshot_data = response.json().get("screenshot")
+    assert screenshot_data is not None
+    screenshot_binary = base64.b64decode(screenshot_data)
+    image = Image.open(BytesIO(screenshot_binary))
     assert image.format == "JPEG"
 
 def test_get_movie_gif():
     movie_id = 3
     response = client.get(f"/movies/{movie_id}/gif")
     assert response.status_code == 200
-    assert response.headers["content-type"] == "image/gif"
 
 def test_format_get_movie_gif():
     movie_id = 3
     response = client.get(f"/movies/{movie_id}/gif")
-    image = Image.open(BytesIO(response.content))
+    gif_data = response.json().get("data")
+    assert gif_data is not None
+    gif_binary = base64.b64decode(gif_data)
+    image = Image.open(BytesIO(gif_binary))
     assert image.format == "GIF"
 
 def test_invalid_movie_screenshot_id():
