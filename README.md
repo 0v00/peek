@@ -23,16 +23,18 @@ Playing around with [detr-resnet-101](https://huggingface.co/facebook/detr-resne
 ### Get Movie Screenshot
 
 - **Endpoint**: `GET /movies/{movie_id}/screenshot`
-- **Description**: Retrieves a random screenshot from the movie specified by the given movie_id. Performs object detection on the screenshot and returns details of detected objects.
+- **Description**: Retrieves a random screenshot from the movie specified by the given movie_id. Performs object detection and segmentation on the screenshot and returns details of detected objects.
 - **Param**: 
     - `movie_id`
 - **Returns**: A JSON object containing:
-    - screenshot: `base64` encoded string of the screenshot
+    - screenshot: `base64` screenshot
+    - segmented_screenshot: `base64` segmented screenshot
     - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
 
 ```json
 {
   "screenshot": "base64_image_data...",
+  "segmented_screenshot": "base64_image_data...",
   "detr_output": [
     {
       "label": "person",
@@ -45,6 +47,14 @@ Playing around with [detr-resnet-101](https://huggingface.co/facebook/detr-resne
 ```
 
 <img src="peek.jpg" alt="screenshot demo" width="500"/>
+<img src="peek_segmented.png" alt="segmented screenshot demo" width="500"/>
+
+Image segmentation takes a _*long*_ time using MPS.
+```bash
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  143k  100  143k    0     0    890      0  0:02:45  0:02:44  0:00:01 35812
+```
 
 ### Get Movie GIF
 
