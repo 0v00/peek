@@ -55,19 +55,3 @@ Image segmentation takes a _*long*_ time using MPS.
                                  Dload  Upload   Total   Spent    Left  Speed
 100  143k  100  143k    0     0    890      0  0:02:45  0:02:44  0:00:01 35812
 ```
-
-### Get Movie GIF
-
-- **Endpoint**: `GET /movies/{movie_id}/gif`
-- **Description**: Generates and retrieves a random 10-second GIF from the movie specified by the given `movie_id`.
-- **Param**: 
-    - `movie_id`
-- **Returns**: JSON object containing a `base64` encoded GIF
-
-```json
-{
-  "data": "base64_gif_data..."
-}
-```
-
-![Demo GIF](peek.gif)
