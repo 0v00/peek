@@ -1,26 +1,13 @@
 # peek
 ( ͡° ͜ʖ ͡°)	
 
-Playing around with [detr-resnet-101](https://huggingface.co/facebook/detr-resnet-101), [segment-anything](https://github.com/facebookresearch/segment-anything), FastAPI, FFmpeg, and SQLite. If you want to use it, create a `movie_files` dir inside of `app`. Update `init_db.py` with the correct movie details. You'll also need a [model checkpoint](https://github.com/facebookresearch/segment-anything#model-checkpoints) in the root dir.
+Playing around with [detr-resnet-101](https://huggingface.co/facebook/detr-resnet-101), [segment-anything](https://github.com/facebookresearch/segment-anything), FastAPI, FFmpeg, and SQLite. If you want to use it, create a `movie_files` dir inside of `app` with some movies/video. Update `init_db.py` with the correct movie details. Or alternatively, just ignore the whole DB and feed it a path to a video file directly. You'll also need a [model checkpoint](https://github.com/facebookresearch/segment-anything#model-checkpoints) in the root dir.
 
 A [forked version of segment-anything](https://github.com/0v00/segment-anything) (with a single, minor change) is necessary to get this running using MPS.
 
 1. `uvicorn app.main:app --reload`
 2. `curl http://localhost:8000/movies/1/singleprediction | tee >(jq -r '.prediction' | base64 --decode > peek_output1.jpg) >(jq '.detr_output') > /dev/null`
 3. enjoy the screenshot. print it out. frame it.
-
-### Get List of Movies
-
-- **Endpoint**: `GET /movies`
-- **Description**: Retrieves a list of all movies in the database, including their IDs, titles, release years, and directors.
-
-```json
-[
-    {"id":1,"title":"Blood Sport","year":1988,"director":"Newt Arnold"},
-    {"id":2,"title":"Boiling Point","year":1990,"director":"Takeshi Kitano"},
-    {"id":3,"title":"Ghost in the Shell","year":1995,"director":"Mamoru Oshii"}
-]
-```
 
 ### Whole Screenshot Segmentation
 
