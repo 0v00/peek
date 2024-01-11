@@ -27,7 +27,7 @@ Playing around with [detr-resnet-101](https://huggingface.co/facebook/detr-resne
 - **Param**: 
     - `movie_id`
 - **Returns**: A JSON object containing:
-    - screenshot: `base64`` encoded string of the screenshot
+    - screenshot: `base64` encoded string of the screenshot
     - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
 
 ```json
