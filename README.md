@@ -24,8 +24,6 @@ curl -X POST "http://localhost:8000/segment/upload/single_prediction" \
 
 - **Endpoint**: `POST /segment/upload/single_prediction`
 - **Description**: Retrieves a random screenshot from the uploaded video. Performs object detection and segmentation and returns details of detected objects. This should only take a few seconds using MPS.
-- **Param**: 
-    - `movie_id`
 - **Returns**: A JSON object containing:
     - screenshot: `base64` screenshot
     - prediction: `base64` screenshot with single mask
