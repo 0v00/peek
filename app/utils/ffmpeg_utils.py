@@ -1,4 +1,3 @@
-import base64
 import subprocess
 
 def take_screenshot(file_path: str, time: str) -> bytes:

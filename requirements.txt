@@ -3,6 +3,7 @@ uvicorn
 httpx
 pytest
 Pillow
+python-multipart
 transformers
 torch
 torchvision
