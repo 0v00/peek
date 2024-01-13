@@ -19,6 +19,34 @@ curl -X POST "http://localhost:8000/segment/upload/single_extract" \
 ```
 3. enjoy the screenshot. print it out. frame it.
 
+### Single Extract
+
+- **Endpoint**: `POST /segment/upload/single_extract`
+- **Description**: Accepts a video and extracts a frame at random. Performs object detection and segmentation to isolate the object from the background. The segmented object is cropped and rendered with transparency in `PNG` format.
+- **Returns**: A JSON object containing:
+    - screenshot: `base64` encoded string of the original frame
+    - extracted_mask: `base64` encoded string of the `PNG` with the extracted object
+    - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
+
+```json
+{
+  "screenshot": "base64_image_data...",
+  "extracted_mask": "base64_image_data...",
+  "detr_output": [
+    {
+      "label": "person",
+      "confidence": 0.98,
+      "box": [163.98, 97.83, 550.38, 581.16]
+    },
+    // ... more detected objects ...
+  ]
+}
+```
+
+<img src="extracted.png" alt="extracted prediction" width="200"/>
+<img src="extracted.jpg" alt="original screenshot" width="500"/>
+
+_*Boiling Point (1990) - Takeshi Kitano*_
 
 ### Single Prediction
 
@@ -46,34 +74,5 @@ curl -X POST "http://localhost:8000/segment/upload/single_extract" \
 
 <img src="prediction.jpg" alt="single prediction mask" width="500"/>
 <img src="screenshot.jpg" alt="original screenshot" width="500"/>
-
-_*Boiling Point (1990) - Takeshi Kitano*_
-
-### Single Extract
-
-- **Endpoint**: `POST /segment/upload/single_extract`
-- **Description**: Accepts a video and extracts a frame at random. Performs object detection and segmentation to isolate the object from the background. The segmented object is cropped and rendered with transparency in `PNG` format.
-- **Returns**: A JSON object containing:
-    - screenshot: `base64` encoded string of the original frame
-    - extracted_mask: `base64` encoded string of the `PNG` with the extracted object
-    - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
-
-```json
-{
-  "screenshot": "base64_image_data...",
-  "extracted_mask": "base64_image_data...",
-  "detr_output": [
-    {
-      "label": "person",
-      "confidence": 0.98,
-      "box": [163.98, 97.83, 550.38, 581.16]
-    },
-    // ... more detected objects ...
-  ]
-}
-```
-
-<img src="extracted.png" alt="extracted prediction" width="200"/>
-<img src="extracted.jpg" alt="original screenshot" width="500"/>
 
 _*Boiling Point (1990) - Takeshi Kitano*_
