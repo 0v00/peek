@@ -92,3 +92,50 @@ def predict(base64_image, coordinates):
     base64_encoded_result = base64.b64encode(buf.read()).decode('utf-8')
 
     return base64_encoded_result
+
+def extract_and_save_masked_area(base64_image, coordinates):
+    image_data = base64.b64decode(base64_image)
+    image = Image.open(io.BytesIO(image_data))
+    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+
+    checkpoint_path = os.path.join(os.path.dirname(__file__), '../../sam_vit_h_4b8939.pth')
+    sam = sam_model_registry["vit_h"](checkpoint=checkpoint_path)
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    sam.to(device=device)
+
+    predictor = SamPredictor(sam)
+    predictor.set_image(image)
+    input_box = np.array(coordinates)
+
+    masks, _, _ = predictor.predict(
+        point_coords=None,
+        point_labels=None,
+        box=input_box[None, :],
+        multimask_output=False,
+    )
+
+    mask = masks[0]
+    mask = (mask > 0).astype(np.uint8) * 255
+
+    unique_values = np.unique(mask)
+    if set(unique_values) != {0, 255}:
+        raise ValueError("Mask contains values other than 0 and 255, which is unexpected.")
+
+    masked_image = cv2.bitwise_and(image, image, mask=mask)
+    masked_image = cv2.cvtColor(masked_image, cv2.COLOR_BGR2RGB)
+
+    alpha_channel = mask
+    r, g, b = cv2.split(masked_image)
+    rgba_image = cv2.merge([r, g, b, alpha_channel]) 
+
+    final_image = Image.fromarray(rgba_image)
+
+    crop_box = (coordinates[0], coordinates[1], coordinates[2], coordinates[3])
+    cropped_image = final_image.crop(crop_box)
+
+    output_buffer = io.BytesIO()
+    cropped_image.save(output_buffer, format='PNG')
+    output_buffer.seek(0)
+    base64_encoded_result = base64.b64encode(output_buffer.read()).decode('utf-8')
+
+    return base64_encoded_result
