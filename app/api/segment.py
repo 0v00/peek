@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, File, UploadFile
 from ..image_processing.detr_resnet_101 import detectObjects
-from ..image_processing.segment_images import segment_image, predict, extract_and_save_masked_area
+from ..image_processing.segment_images import segment_image, predict, extract_and_save_obj
 from ..utils.ffmpeg_utils import take_screenshot, get_movie_duration
 from PIL import Image
 from io import BytesIO
@@ -49,11 +49,11 @@ async def single_extract(file: UploadFile):
         person_objects = [obj for obj in detr_output if obj['label'] == 'person']
         if person_objects:
             highest_confidence = max(person_objects, key=lambda x: x['confidence'])
-            extracted_mask = extract_and_save_masked_area(encoded_screenshot, highest_confidence['box'])
+            extracted_obj = extract_and_save_obj(encoded_screenshot, highest_confidence['box'])
             os.remove(temp_file_path)
             return {
                 "screenshot": encoded_screenshot,
-                "extracted_mask": extracted_mask,
+                "extracted_obj": extracted_obj,
                 "detr_output": detr_output
             }
     

@@ -93,7 +93,7 @@ def predict(base64_image, coordinates):
 
     return base64_encoded_result
 
-def extract_and_save_masked_area(base64_image, coordinates):
+def extract_and_save_obj(base64_image, coordinates):
     image_data = base64.b64decode(base64_image)
     image = Image.open(io.BytesIO(image_data))
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)

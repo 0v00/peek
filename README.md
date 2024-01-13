@@ -14,8 +14,8 @@ curl -X POST "http://localhost:8000/segment/upload/single_extract" \
      -H "accept: application/json" \
      -H "Content-Type: multipart/form-data" \
      -F "file=@path/to/some/video" \
-     | jq -r '.screenshot + " " + .extracted_mask' \
-     | (read screenshot extracted_mask; echo $screenshot | base64 --decode > screenshot.jpg; echo $prediction | base64 --decode > extracted_mask.png)
+     | jq -r '.screenshot + " " + .extracted_obj' \
+     | (read screenshot extracted_obj; echo $screenshot | base64 --decode > screenshot.jpg; echo $prediction | base64 --decode > extracted_obj.png)
 ```
 3. enjoy the screenshot. print it out. frame it.
 
@@ -31,7 +31,7 @@ curl -X POST "http://localhost:8000/segment/upload/single_extract" \
 ```json
 {
   "screenshot": "base64_image_data...",
-  "extracted_mask": "base64_image_data...",
+  "extracted_obj": "base64_image_data...",
   "detr_output": [
     {
       "label": "person",
