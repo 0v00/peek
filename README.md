@@ -25,7 +25,7 @@ curl -X POST "http://localhost:8000/segment/upload/single_extract" \
 - **Description**: Accepts a video and extracts a frame at random. Performs object detection and segmentation to isolate the object from the background. The segmented object is cropped and rendered with transparency in `PNG` format.
 - **Returns**: A JSON object containing:
     - screenshot: `base64` encoded string of the original frame
-    - extracted_mask: `base64` encoded string of the `PNG` with the extracted object
+    - extracted_obj: `base64` encoded string of the `PNG` with the extracted object
     - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
 
 ```json
