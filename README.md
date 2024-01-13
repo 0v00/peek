@@ -1,7 +1,7 @@
 # peek
 ( ͡° ͜ʖ ͡°)	
 
-Playing around with [segment-anything](https://github.com/facebookresearch/segment-anything), [detr-resnet-101](https://huggingface.co/facebook/detr-resnet-101), FastAPI, and FFmpeg.
+Playing around with [segment-anything](https://github.com/facebookresearch/segment-anything), [detr-resnet-101](https://huggingface.co/facebook/detr-resnet-101), FastAPI, and FFmpeg. Text to object segmentation (although currently I only look for objects labeled `person`), and then return a semi-transparent mask overlaid on an image, or return an extracted object with a transparent background.
 
 You'll need ffmpeg installed, and a [model checkpoint](https://github.com/facebookresearch/segment-anything#model-checkpoints) placed in the root dir.
 
