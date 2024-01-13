@@ -73,7 +73,7 @@ _*Boiling Point (1990) - Takeshi Kitano*_
 }
 ```
 
-<img src="extracted.png" alt="extracted prediction" width="250"/>
+<img src="extracted.png" alt="extracted prediction" width="200"/>
 <img src="extracted.jpg" alt="original screenshot" width="500"/>
 
 _*Boiling Point (1990) - Takeshi Kitano*_
