@@ -13,8 +13,8 @@ import tempfile
 
 router = APIRouter()
 
-@router.post("/segment/upload/single_prediction")
-async def single_prediction(file: UploadFile):    
+@router.post("/segment/upload/overlay_mask")
+async def overlay_mask(file: UploadFile):    
     MAX_ATTEMPTS = 5
 
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:

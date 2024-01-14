@@ -85,9 +85,9 @@ curl -X POST "http://localhost:8000/segment/upload/extract_obj_with_label" \
 <img src="extracted_obj.png" alt="extracted obj" width="150"/>
 <img src="takeshi.png" alt="original image" width="500"/>
 
-### Single Prediction
+### Overlay Mask
 
-- **Endpoint**: `POST /segment/upload/single_prediction`
+- **Endpoint**: `POST /segment/upload/overlay_mask`
 - **Description**: Accepts a video and extracts a frame at random. Performs object detection and segmentation. This should only take a few seconds using MPS.
 - **Returns**: A JSON object containing:
     - screenshot: `base64` encoded string of the original frame
