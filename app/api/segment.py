@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Form, UploadFile
 from ..image_processing.detr_resnet_101 import detectObjects
 from ..image_processing.segment_images import predict, extract_and_save_obj
 from ..utils.ffmpeg_utils import take_screenshot, get_movie_duration
+from ..utils.validation import validate_image, validate_video
 from PIL import Image
 from io import BytesIO
 import random
@@ -13,12 +14,14 @@ import tempfile
 router = APIRouter()
 
 @router.post("/segment/upload/single_prediction")
-async def single_prediction(file: UploadFile):
+async def single_prediction(file: UploadFile):    
     MAX_ATTEMPTS = 5
 
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         shutil.copyfileobj(file.file, temp_file)
         temp_file_path = temp_file.name
+
+    await validate_video(temp_file_path)
 
     for _ in range(MAX_ATTEMPTS):
         encoded_screenshot, detr_output = take_screenshot_with_detr(temp_file_path)
@@ -38,6 +41,8 @@ async def single_prediction(file: UploadFile):
 
 @router.post("/segment/upload/extract_obj_with_label")
 async def extract_obj_with_label(file: UploadFile, label: str = Form(...)):
+    await validate_image(file)
+
     file_stream = await file.read()
     encoded_image, detr_output = process_image_with_detr(file_stream)
     label_objects = [obj for obj in detr_output if obj['label'] == label]
@@ -51,12 +56,14 @@ async def extract_obj_with_label(file: UploadFile, label: str = Form(...)):
     raise HTTPException(status_code=404, detail=f"No objects of type '{label}' detected")
 
 @router.post("/segment/upload/extract_obj_from_video")
-async def extract_obj_from_video(file: UploadFile):
+async def extract_obj_from_video(file: UploadFile):    
     MAX_ATTEMPTS = 5
 
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         shutil.copyfileobj(file.file, temp_file)
         temp_file_path = temp_file.name
+    
+    await validate_video(temp_file_path)
 
     for _ in range(MAX_ATTEMPTS):
         encoded_screenshot, detr_output = take_screenshot_with_detr(temp_file_path)

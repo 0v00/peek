@@ -17,7 +17,7 @@ curl -X POST "http://localhost:8000/segment/upload/extract_obj_from_video" \
      -H "Content-Type: multipart/form-data" \
      -F "file=@path/to/some/video" \
      | jq -r '.screenshot + " " + .extracted_obj' \
-     | (read screenshot extracted_obj; echo $screenshot | base64 --decode > screenshot.jpg; echo $prediction | base64 --decode > extracted_obj.png)
+     | (read screenshot extracted_obj; echo $screenshot | base64 --decode > screenshot.jpg; echo $extracted_obj | base64 --decode > extracted_obj.png)
 ```
 3. enjoy the screenshot. print it out. frame it.
 
