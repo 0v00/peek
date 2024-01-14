@@ -12,7 +12,7 @@ This example uses a [forked version of segment-anything](https://github.com/0v00
 3. `uvicorn app.main:app --reload`
 4. make a POST request:
 ```bash
-curl -X POST "http://localhost:8000/segment/upload/extract_obj_from_video" \
+curl -X POST "http://localhost:8000/segment/extract_obj_from_video" \
      -H "accept: application/json" \
      -H "Content-Type: multipart/form-data" \
      -F "file=@path/to/some/video" \
@@ -23,7 +23,7 @@ curl -X POST "http://localhost:8000/segment/upload/extract_obj_from_video" \
 
 ### Extract Object from Video
 
-- **Endpoint**: `POST /segment/upload/extract_obj_from_video`
+- **Endpoint**: `POST /segment/extract_obj_from_video`
 - **Description**: Accepts a video and extracts a frame at random. Performs object detection and segmentation to isolate the object from the background. The segmented object is cropped and rendered with transparency in `PNG` format.
 - **Returns**: A JSON object containing:
     - screenshot: `base64` encoded string of the original frame
@@ -52,14 +52,14 @@ _*Boiling Point (1990) - Takeshi Kitano*_
 
 ### Extract Object with Label
 
-- **Endpoint**: `POST /segment/upload/extract_obj_with_label`
+- **Endpoint**: `POST /segment/extract_obj_with_label`
 - **Description**: Accepts an image and label. Performs object detection and segmentation to isolate the object from the background. The segmented object is cropped and rendered with transparency in `PNG` format.
 - **Returns**: A JSON object containing:
     - extracted_obj: `base64` encoded string of the `PNG` with the extracted object
     - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
 
 ```bash
-curl -X POST "http://localhost:8000/segment/upload/extract_obj_with_label" \
+curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
      -H "accept: application/json" \
      -H "Content-Type: multipart/form-data" \
      -F "file=@path/to/image;type=image/png" \
@@ -87,7 +87,7 @@ curl -X POST "http://localhost:8000/segment/upload/extract_obj_with_label" \
 
 ### Overlay Mask
 
-- **Endpoint**: `POST /segment/upload/overlay_mask`
+- **Endpoint**: `POST /segment/overlay_mask`
 - **Description**: Accepts a video and extracts a frame at random. Performs object detection and segmentation. This should only take a few seconds using MPS.
 - **Returns**: A JSON object containing:
     - screenshot: `base64` encoded string of the original frame

@@ -4,12 +4,9 @@ from io import BytesIO
 import subprocess
 import os
 
-async def validate_image(file: UploadFile):
+async def validate_image(image_stream: BytesIO):
     try:
-        image_data = await file.read()
-        Image.open(BytesIO(image_data)).verify()
-        # inefficient
-        file.file.seek(0)
+        Image.open(image_stream).verify()
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid image file: {str(e)}")
 

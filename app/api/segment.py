@@ -13,7 +13,7 @@ import tempfile
 
 router = APIRouter()
 
-@router.post("/segment/upload/overlay_mask")
+@router.post("/segment/overlay_mask")
 async def overlay_mask(file: UploadFile):    
     MAX_ATTEMPTS = 5
 
@@ -39,11 +39,11 @@ async def overlay_mask(file: UploadFile):
     os.remove(temp_file_path)
     raise HTTPException(status_code=404, detail="no objects detected")
 
-@router.post("/segment/upload/extract_obj_with_label")
+@router.post("/segment/extract_obj_with_label")
 async def extract_obj_with_label(file: UploadFile, label: str = Form(...)):
-    await validate_image(file)
-
     file_stream = await file.read()
+    image_stream = BytesIO(file_stream)
+    await validate_image(image_stream)
     encoded_image, detr_output = process_image_with_detr(file_stream)
     label_objects = [obj for obj in detr_output if obj['label'] == label]
     if label_objects:
@@ -55,7 +55,7 @@ async def extract_obj_with_label(file: UploadFile, label: str = Form(...)):
         }
     raise HTTPException(status_code=404, detail=f"No objects of type '{label}' detected")
 
-@router.post("/segment/upload/extract_obj_from_video")
+@router.post("/segment/extract_obj_from_video")
 async def extract_obj_from_video(file: UploadFile):    
     MAX_ATTEMPTS = 5
 
