@@ -70,7 +70,7 @@ curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
 - **Description**: Accepts an image. Performs object detection and segmentation. Overlays detected object with a semi-transparent mask.
 - **Returns**: A JSON object containing:
     - image_with_mask: `base64` encoded string of the image with mask
-    - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
+    - detr_output: An array of objects representing detected items in the image. Each object includes the label, confidence score, and bounding box coordinates.
 
 ```json
 {
