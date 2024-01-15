@@ -30,6 +30,8 @@ curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
     - extracted_obj: `base64` encoded string of the `PNG` with the extracted object
     - detr_output: An array of objects representing detected items in the screenshot. Each object includes the label, confidence score, and bounding box coordinates.
 
+### example usage
+
 ```bash
 curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
      -H "accept: application/json" \
@@ -72,6 +74,20 @@ curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
     - image_with_mask: `base64` encoded string of the image with mask
     - detr_output: An array of objects representing detected items in the image. Each object includes the label, confidence score, and bounding box coordinates.
 
+### example usage
+
+```bash
+curl -X POST "http://localhost:8000/segment/overlay_mask" \
+     -H "accept: application/json" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@path/to/image;type=image/png" \
+     -F "label=person" \
+     | tee >(jq -r '.image_with_mask' | base64 --decode > image_with_mask.png) \
+     | jq '.detr_output'
+```
+
+### example json
+
 ```json
 {
   "image_with_mask": "base64_image_data...",
@@ -85,6 +101,7 @@ curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
   ]
 }
 ```
+### example of image with mask
 
 <img src="image_with_mask.png" alt="image with mask" width="500"/>
 <img src="takeshi.png" alt="original screenshot" width="500"/>
