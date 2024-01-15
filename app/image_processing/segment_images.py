@@ -56,7 +56,7 @@ def segment_image(base64_image):
 
     return base64_encoded_result
 
-def predict(base64_image, coordinates):
+def overlay_with_mask(base64_image, coordinates):
     image_data = base64.b64decode(base64_image)
     image = Image.open(io.BytesIO(image_data))
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
