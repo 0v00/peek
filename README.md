@@ -20,7 +20,7 @@ curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
      | tee >(jq -r '.extracted_obj' | base64 --decode > extracted_obj.png) \
      | jq '.detr_output'
 ```
-3. enjoy the screenshot. print it out. frame it.
+3. enjoy the image. print it out. frame it.
 
 ## Extract Object with Label
 
