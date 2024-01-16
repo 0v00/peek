@@ -2,6 +2,7 @@ fastapi
 uvicorn
 httpx
 pytest
+pytest-xdist
 Pillow
 python-multipart
 transformers

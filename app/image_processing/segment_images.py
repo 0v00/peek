@@ -5,6 +5,8 @@ import base64
 import torch
 import cv2
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from segment_anything import sam_model_registry, SamPredictor, SamAutomaticMaskGenerator
 
