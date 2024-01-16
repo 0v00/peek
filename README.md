@@ -107,3 +107,6 @@ curl -X POST "http://localhost:8000/segment/overlay_mask" \
 <img src="takeshi.png" alt="original screenshot" width="500"/>
 
 _*Boiling Point (1990) - Takeshi Kitano*_
+
+## tests
+Run `pytest` or `pytest -n <amount_of_workers>`, the latter command will spawn a number of worker processes equal to the number of available CPUs, and then distribute the tests randomly across them.
