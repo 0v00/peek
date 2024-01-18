@@ -60,11 +60,15 @@ curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
 
 ### examples of extracted objects
 
-<img src="extracted_obj.png" alt="extracted obj" width="150"/>
-<img src="takeshi.png" alt="original image" width="500"/>
+<img src="zissou_segment.png" alt="segmented and extracted obj" width="150"/>
+<img src="zissou_before.png" alt="original image" width="500"/>
 
-<img src="extracted.png" alt="extracted prediction" width="200"/>
-<img src="extracted.jpg" alt="original screenshot" width="500"/>
+_*They Live. 1988. John Carpenter.*_
+
+<img src="they_live_segment.png" alt="segmented and extracted obj" width="200"/>
+<img src="they_live_before.png" alt="original image" width="500"/>
+
+_*The Life Aquatic with Steve Zissou. 2004. Wes Anderson.*_
 
 ### Overlay Mask
 
@@ -103,10 +107,10 @@ curl -X POST "http://localhost:8000/segment/overlay_mask" \
 ```
 ### example of image with mask
 
-<img src="image_with_mask.png" alt="image with mask" width="500"/>
-<img src="takeshi.png" alt="original screenshot" width="500"/>
+<img src="zissou_mask.png" alt="image with mask" width="500"/>
+<img src="before_mask.png" alt="original image" width="500"/>
 
-_*Boiling Point (1990) - Takeshi Kitano*_
+_*The Life Aquatic with Steve Zissou. 2004. Wes Anderson.*_
 
 ## tests
 Run `pytest` or `pytest -n <amount_of_workers>`, the latter command will spawn a number of worker processes equal to the number of available CPUs, and then distribute the tests randomly across them.
