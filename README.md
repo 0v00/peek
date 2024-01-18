@@ -63,12 +63,12 @@ curl -X POST "http://localhost:8000/segment/extract_obj_with_label" \
 <img src="zissou_segment.png" alt="segmented and extracted obj" width="150"/>
 <img src="zissou_before.png" alt="original image" width="500"/>
 
-_*They Live. 1988. John Carpenter.*_
+_*The Life Aquatic with Steve Zissou. 2004. Wes Anderson.*_
 
 <img src="they_live_segment.png" alt="segmented and extracted obj" width="200"/>
 <img src="they_live_before.png" alt="original image" width="500"/>
 
-_*The Life Aquatic with Steve Zissou. 2004. Wes Anderson.*_
+_*They Live. 1988. John Carpenter.*_
 
 ### Overlay Mask
 
