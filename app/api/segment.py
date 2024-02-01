@@ -4,11 +4,7 @@ from ..image_processing.segment_images import overlay_with_mask, extract_and_sav
 from ..utils.validation import validate_image
 from PIL import Image
 from io import BytesIO
-import random
-import os
 import base64
-import shutil
-import tempfile
 
 router = APIRouter()
 
